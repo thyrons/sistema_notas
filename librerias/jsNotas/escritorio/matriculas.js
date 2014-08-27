@@ -1036,7 +1036,7 @@ function ventanaMatriculas(){
                         items:[{
                             xtype: 'combo',
                             fieldLabel: 'CI.',
-                            labelWidth: 50,
+                            labelWidth: 70,
                             id: 'estudianteMatricula',
                             name: 'estudianteMatricula',
                             store: dsEstudiante,
@@ -1047,7 +1047,7 @@ function ventanaMatriculas(){
                             hideTrigger:true,
                             allowBlank:true, 
                             minLength:2,
-                            minChars:2,
+                            minChars:1,
                             invalidText: 'Mínimo 2 caracteres para buscar',  
                             anchor: '100%',
                             listeners:{
@@ -1115,7 +1115,7 @@ function ventanaMatriculas(){
                         items:[
                         {
                             fieldLabel: 'Apellidos:',
-                            labelWidth: 50,                    
+                            labelWidth: 70,                    
                             xtype: 'textfield',
                             name: 'apellidosMatricula',
                             id: 'apellidosMatricula',                    
@@ -1131,7 +1131,7 @@ function ventanaMatriculas(){
                         items:[
                         {
                             fieldLabel: 'Nombres:',
-                            labelWidth: 50,                    
+                            labelWidth: 70,                    
                             xtype: 'textfield',
                             name: 'nombresMatricula',
                             id: 'nombresMatricula',                    
@@ -1164,7 +1164,7 @@ function ventanaMatriculas(){
                         },{
                             xtype: 'combo',
                             fieldLabel: 'Escuela',
-                            labelWidth: 50,
+                            labelWidth: 70,
                             id: 'escuelaMatricula',
                             name: 'escuelaMatricula',
                             store: dsEscuela1,
@@ -1204,7 +1204,7 @@ function ventanaMatriculas(){
                                 items:[{
                                     xtype: 'combo',
                                     fieldLabel: 'Paralelo',
-                                    labelWidth: 50,                    
+                                    labelWidth: 70,                    
                                     id: 'paraleloMatricula',
                                     name: 'paraleloMatricula',
                                     autoSelect: false,
@@ -1223,7 +1223,7 @@ function ventanaMatriculas(){
                                 },{
                                     xtype: 'combo',
                                     fieldLabel: 'Modalidad',
-                                    labelWidth: 50,                    
+                                    labelWidth: 70,                    
                                     id: 'matriculaModalidad',
                                     name: 'matriculaModalidad',
                                     autoSelect: false,
@@ -1246,7 +1246,7 @@ function ventanaMatriculas(){
                                 items:[{
                                     xtype: 'combo',
                                     fieldLabel: 'Nivel',
-                                    labelWidth: 50,                    
+                                    labelWidth: 70,                    
                                     id: 'nivelMatricula',
                                     name: 'nivelMatricula',
                                     autoSelect: false,
@@ -1262,7 +1262,37 @@ function ventanaMatriculas(){
                                     valueField: 'codigo',
                                     msgTarget: 'side',
                                     value:'1',
-                                },]   
+                                },{
+                                    layout: 'column',
+                                    bodyStyle: '/*background:#DFE8F6*/; padding-left:0px; border:none;',
+                                    items: [{
+                                        columnWidth: .45,
+                                        layout: 'form',                
+                                        bodyStyle: '/*background:#DFE8F6*/; padding-left:0px; border:none;',
+                                        items:[{
+                                            xtype:'checkboxfield',
+                                            boxLabel: 'Extra Ordinaria',
+                                            name: 'extraOrdinaria',
+                                            inputValue: '1',
+                                            uncheckedValue: '0',    
+                                            id: 'checkExtraordinaria',
+                                            readOnly:true,        
+                                        }]   
+                                    },{
+                                        columnWidth: .55,
+                                        layout: 'form',                
+                                        bodyStyle: '/*background:#DFE8F6*/; padding-left:0px; border:none;',
+                                        items:[{
+                                            xtype:'checkboxfield',
+                                            boxLabel: 'Extra Extra Ordinaria',
+                                            name: 'extraExtraOrdinaria',
+                                            inputValue: '1',
+                                            uncheckedValue: '0',    
+                                            id: 'checkExtraExtraordinaria',
+                                            readOnly:true,        
+                                        }]    
+                                    }]
+                                }]   
                             },]
                         },]
                     }]
@@ -1271,7 +1301,20 @@ function ventanaMatriculas(){
                     layout: 'form',                        
                     bodyStyle: '/*background:#DFE8F6*/; padding-left:5px;margin-top:-5px;margin-top:-5px; border:none;',
                     items:[
-                    {}]    
+                    {
+                        xtype: 'fieldset',
+                        columnWidth: 1,
+                        title: 'Datos de Ingreso (Casos Excepcionales)',
+                        collapsible: true,
+                        //defaultType: 'textfield',
+                        defaults: {
+                            anchor: '100%'
+                        },
+                        layout: 'form',
+                        items: [{
+                              
+                        }]  
+                    }]    
                 },]
             },{
                 columnWidth: .20,
@@ -1303,7 +1346,9 @@ function ventanaMatriculas(){
                         }]
                     }
                 ]
-            },]
+            },{
+
+            }]
         },];
         var boton=[ 
         {
