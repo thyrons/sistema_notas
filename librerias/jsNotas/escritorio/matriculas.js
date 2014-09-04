@@ -966,15 +966,22 @@ function ventanaMatriculas(){
                 { codigo: "10", descripcion: "10" },                
             ]
         };
-        Ext.define('ServiceList', {
+        Ext.define('ServiceList1', {
             extend: 'Ext.data.Model',
             fields: [
                 {name: 'id_modalidad', type: 'int'},
-                {name: 'nombre_modadlidad', type: 'string'}
+                {name: 'nombre_modalidad', type: 'string'}
+            ]
+        });   
+        Ext.define('ServiceList2', {
+            extend: 'Ext.data.Model',
+            fields: [
+                {name: 'id_seccion', type: 'int'},
+                {name: 'nombre_seccion', type: 'string'}
             ]
         });        
         var storeMatriculaModalidad = Ext.create('Ext.data.Store', {
-            model: 'ServiceList',
+            model: 'ServiceList1',
             autoLoad: true,
             proxy: {
                 limitParam: undefined,
@@ -985,6 +992,30 @@ function ventanaMatriculas(){
                 type: 'ajax',
                 url: '../servidor/general/cargaModalidad.php'
             },
+            listeners:{
+                load: function(store, records, success) {                    
+                    Ext.getCmp('matriculaModalidad').setValue(store.getAt('0').get('id_modalidad'));       
+                }
+            },       
+                     
+        });   
+        var storeMatriculaSeccion = Ext.create('Ext.data.Store', {
+            model: 'ServiceList2',
+            autoLoad: true,
+            proxy: {
+                limitParam: undefined,
+                startParam: undefined,
+                paramName: undefined,
+                pageParam: undefined,
+                noCache: false,
+                type: 'ajax',
+                url: '../servidor/general/cargaSeccion.php'
+            },
+             listeners:{
+                load: function(store, records, success) {                    
+                    Ext.getCmp('matriculaSeccion').setValue(store.getAt('0').get('id_seccion'));       
+                }
+            },  
                      
         });   
         var items=[
@@ -1235,8 +1266,26 @@ function ventanaMatriculas(){
                                     enableKeyEvents: true,                
                                     queryMode: 'local',
                                     store: storeMatriculaModalidad,
-                                    displayField: 'nombre_modadlidad',
+                                    displayField: 'nombre_modalidad',
                                     valueField: 'id_modalidad',
+                                    msgTarget: 'side',
+                                },{
+                                    xtype: 'combo',
+                                    fieldLabel: 'Sección',
+                                    labelWidth: 70,                    
+                                    id: 'matriculaSeccion',
+                                    name: 'matriculaSeccion',
+                                    autoSelect: false,
+                                    allowBlank: false,
+                                    editable: false,
+                                    triggerAction: 'all',
+                                    typeAhead: true,
+                                    anchor: '100%',
+                                    enableKeyEvents: true,                
+                                    queryMode: 'local',
+                                    store: storeMatriculaSeccion,
+                                    displayField: 'nombre_seccion',
+                                    valueField: 'id_seccion',
                                     msgTarget: 'side',
                                 },]
                             },{
@@ -1276,7 +1325,7 @@ function ventanaMatriculas(){
                                             inputValue: '1',
                                             uncheckedValue: '0',    
                                             id: 'checkExtraordinaria',
-                                            readOnly:true,        
+                                            readOnly:false,        
                                         }]   
                                     },{
                                         columnWidth: .55,
@@ -1289,7 +1338,7 @@ function ventanaMatriculas(){
                                             inputValue: '1',
                                             uncheckedValue: '0',    
                                             id: 'checkExtraExtraordinaria',
-                                            readOnly:true,        
+                                            readOnly:false,        
                                         }]    
                                     }]
                                 }]   
@@ -1310,9 +1359,103 @@ function ventanaMatriculas(){
                         defaults: {
                             anchor: '100%'
                         },
-                        layout: 'form',
-                        items: [{
-                              
+                        layout: 'column',
+                        items: [{                            
+                            columnWidth: .50,
+                            layout: 'form',                
+                            bodyStyle: '/*background:#DFE8F6*/; padding-left:0px; border:none;',
+                            items:[{
+                                xtype:'checkboxfield',
+                                boxLabel: 'Matricula solo asignaturas',
+                                name: 'matriculaSoloAsignaturas',
+                                inputValue: '1',
+                                uncheckedValue: '0',    
+                                id: 'checkMatriculaSoloAsignaturas',
+                                readOnly:false,        
+                            }]
+                        },{
+                            columnWidth: .50,
+                            layout: 'form',                
+                            bodyStyle: '/*background:#DFE8F6*/; padding-left:0px; border:none;',
+                            items:[{
+                                xtype:'checkboxfield',
+                                boxLabel: 'Actualización Conocimientos',
+                                name: 'actualizacionConocimientos',
+                                inputValue: '1',
+                                uncheckedValue: '0',    
+                                id: 'checkActualizacionConocimientos',
+                                readOnly:false,        
+                            }]    
+                        },{
+                            columnWidth: .30,
+                            layout: 'form',                
+                            bodyStyle: '/*background:#DFE8F6*/; padding-left:0px; border:none;',
+                            items:[{
+                                xtype:'checkboxfield',
+                                boxLabel: 'Homologación',
+                                name: 'homologacionMatricula',
+                                inputValue: '1',
+                                uncheckedValue: '0',    
+                                id: 'checkHomologacionMatricula',
+                                readOnly:false,        
+                            }]      
+                        },{
+                            columnWidth: .70,
+                            layout: 'form',                
+                            bodyStyle: '/*background:#DFE8F6*/; padding-left:0px; border:none;',
+                            items:[{
+                                labelWidth: 70,                    
+                                xtype: 'textfield',
+                                hideLabel:true,
+                                name: 'homolgacionTexto',
+                                id: 'homolgacionTexto',                    
+                                allowBlank:true,    
+                                anchor:"100% 8%",                       
+                                msgTarget: 'side',
+                                readOnly:true,        
+                            }]     
+                        },{
+                            columnWidth: .50,
+                            layout: 'form',                
+                            bodyStyle: '/*background:#DFE8F6*/; padding-left:0px; border:none;',
+                            items:[{
+                                xtype:'checkboxfield',
+                                boxLabel: 'Reingreso',
+                                name: 'reingresoMatricula',
+                                inputValue: '1',
+                                uncheckedValue: '0',    
+                                id: 'checkReingresoMatricula',
+                                readOnly:false,        
+                            }]
+                        },{
+                            columnWidth: .50,
+                            layout: 'form',                
+                            bodyStyle: '/*background:#DFE8F6*/; padding-left:0px; border:none;',
+                            items:[{
+                                labelWidth: 200,    
+                                fieldLabel: "Créditos COnvalidados-Reingreso",
+                                xtype: 'textfield',
+                                name: 'convalidadosMatricula',
+                                id: 'convalidadosMatricula',                    
+                                allowBlank:true,    
+                                anchor:"100% 8%",                       
+                                msgTarget: 'side',
+                                readOnly:false,            
+                            }]
+                        },{
+                            columnWidth: 1,
+                            layout: 'form',                
+                            bodyStyle: '/*background:#DFE8F6*/; padding-left:0px; border:none;',
+                            items:[{
+                                xtype: 'textareafield',
+                                grow: true,
+                                width: 400,
+                                height:50 ,
+                                name: 'detalleMatricula',
+                                id: 'detalleMatricula',
+                                fieldLabel: 'Detale',
+                                anchor: '100%'
+                            }]
                         }]  
                     }]    
                 },]
@@ -1381,7 +1524,7 @@ function ventanaMatriculas(){
         var win = new Ext.Window({
             layout: 'fit',
             width: 750,
-            height: 470,
+            height: 600,
             closable: true,
             resizable: false,
             plain: true,
